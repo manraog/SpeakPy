@@ -1,0 +1,5 @@
+!Motorama=mplayer+/media/multimedia/Musica/Motorama/Alps/03 Compass.mp3
+!video=vlc+/home/ricardo/videos/moon.avi
+!luz cocina=luz_cocina.py
+!luz sala=luz_sala.py
+!led=led.py
