@@ -5,17 +5,10 @@ import subprocess, string, time, configparser
 def escuchar():
 	#Grabar audio del microfono, convertirlo a FLAC
 	#y enviarlo a Google quien devolvera un JSON
-	print('Grabando voz...')
-	voz_raw = subprocess.Popen(['arecord', '-D', 'plughw:1,0', '-q', '-f', 'cd', '-t', 'wav', '-d', '3', '-r', '16000'], shell=False, stdout=subprocess.PIPE)
-	voz_flac = subprocess.call(['flac', '-', '-f', '--best', '--sample-rate', '16000', '-s', '-o', 'voz.flac'], shell=False, stdin=voz_raw.stdout)
-	print('Convirtiendo voz a texto...')
-	envio = subprocess.Popen('wget -q -U "Mozilla/5.0" --post-file voz.flac --header "Content-Type: audio/x-flac; rate=16000" -O - "https://www.google.com.mx/speech-api/v2/recognize?output=json&lang=es&key=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw"', shell=True, universal_newlines=True, stdout=subprocess.PIPE)
+	envio = subprocess.Popen(["./STT.sh"], shell=True, universal_newlines=True, stdout=subprocess.PIPE)
 	texto = envio.communicate()[0]
-	texto = texto.split('"')
-	if len(texto) < 9:
-		return " "
-	else:
-		return texto[9] 
+	texto = texto.strip('\n')
+	return texto
 
 def decir(frase):
 	#Enviar texto a Google y reproducir el audio devuelto
@@ -45,16 +38,18 @@ def buscar(texto):
 
 while True:
 	clave = escuchar()
+	print('Escuche:' + clave)
 	if clave == 'Janis':
 		decir("Dime Ricardo")
 		orden = escuchar()
 		comando = buscar(orden)
 		if comando != 'no existe':
 			proceso = subprocess.Popen(comando, shell=False)
-			time.sleep(2)
+			#time.sleep(3)
 			while proceso.poll() == None:
-				print('estoy en while')
+				#print('-> ¿Cerrar?')
 				terminar = escuchar()
+				#print('Terminar:' + terminar)
 				if terminar == 'cerrar':
 					proceso.kill()
 		else:
