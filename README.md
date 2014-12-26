@@ -8,8 +8,8 @@ Comandos
 ==========
 Las ordenes se encuentran en el archivo commands.txt completamente editable, siempre y cuando se cumpla la siguiente sintaxis:
 
->![COMANDO DE VOZ]=[COMANDO]
+`![COMANDO DE VOZ]=[COMANDO]`
 
 En el caso de comando con argumentos se sigue la siguiente sintaxis:
 
->![COMANDO DE VOZ]=[COMANDO]+[ARGUMENTO]
+`![COMANDO DE VOZ]=[COMANDO]+[ARGUMENTO]`
